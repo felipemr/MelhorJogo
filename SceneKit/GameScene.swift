@@ -48,6 +48,13 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     var lastUpdateTimeInterval:NSTimeInterval = 0.0
     
     
+    //numero de inimigos na tela
+    var obstaclesOnScreen:Int = 0
+    
+    //numero de inimigos destruidos
+    var obstaclesDestroyed = 0
+    
+    
     //MARK: Actors
     var title:SKLabelNode!
     var score:SKLabelNode!
@@ -79,7 +86,9 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         //faz a magia acontecer
         if firstBody.categoryBitMask == projectileCategory && secondBody.categoryBitMask == obstacleCategory{
-            self.projectileHit(firstBody.node as! SKSpriteNode, obstacle: secondBody.node as! SKSpriteNode)
+            if (firstBody.node != nil){
+                self.projectileHit(firstBody.node as! SKSpriteNode, obstacle: secondBody.node as! SKSpriteNode)
+            }
         }
     }
     
@@ -104,12 +113,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             }
             else if child.name == "score"{
                 self.score = child as! SKLabelNode
-                self.score.alpha = 0
+                //self.score.alpha = 0
             }
             else if child.name == "player"{
                 self.player = child as! SKSpriteNode
 //                self.player.alpha = 0
-                self.player.physicsBody?.restitution = 1.0
+                //self.player.physicsBody?.restitution = 1.0
                 //self.player.physicsBody?.mass=10
             }
 //            else if child.name == "obstacle"{
@@ -173,6 +182,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         obstacle.physicsBody?.collisionBitMask = 0
         
         self.addChild(obstacle)
+        obstaclesOnScreen++
         
     }
 
@@ -254,6 +264,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         println("Hit")
         projectile.removeFromParent()
         obstacle.removeFromParent()
+        obstaclesOnScreen--
+        obstaclesDestroyed++
     }
    
     
@@ -268,5 +280,9 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         //aqui vão os comandos a serem executados a cada ciclo de atualização
         //println("UPDATE")
+        while(obstaclesOnScreen < 5){
+            self.createObstacle()
+        }
+        self.score.text = String(format: "%d",obstaclesDestroyed)
     }
 }
