@@ -419,6 +419,7 @@
 				6E1598451AD845B1000ADE66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6E1598461AD845B1000ADE66 /* Build configuration list for PBXNativeTarget "SceneKitTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +428,7 @@
 				6E1598481AD845B1000ADE66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
